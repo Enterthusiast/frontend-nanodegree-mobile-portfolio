@@ -29,10 +29,11 @@ form {
   font-weight: 800;
 }
 
+/* removed the width of 256px and added translateZ to get help from the gpu */
 .mover {
   position: fixed;
-  width: 256px;
   z-index: -1;
+  transform: translateZ(0);
 }
 
 .randomPizzaContainer {
