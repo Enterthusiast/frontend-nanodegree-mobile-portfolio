@@ -71,3 +71,21 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 * <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
 * <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
 * <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+
+#### Summary: Optimization Made in pizza.html
+
+* in changePizzaSizes(size)
+	* Change the slider value to a percent width, preventing too much useless calculations
+	* Store the query selection using document.getElementsByClassName for better performances (instead of querySelector)
+* in paintPizzaSizes()
+	* Store the query selection in allRandomPizzaContainer
+	* Use requestAnimationFrame(paintPizzaSizes) to call the function for better performance
+* in updatePositions()
+	* Calculate the new pizza positions first
+	* Then set the new positions in one loop with applyNewPosition()
+	* Use requestAnimationFrame(applyNewPosition) for better performance
+* Created scrollLog & requestTick to prevent scrolling from spamming the updatePositions function
+* in addEventListener('DOMContentLoaded', function()...
+	* Set the pizza to 30 instead of 200
+	* Create the new element first
+	* Then add them to the DOM in one loop

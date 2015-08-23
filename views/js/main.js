@@ -422,11 +422,7 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
-  // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  // function determineDx (oldwidth, size, windowwidth) {
-  //   var oldsize = oldwidth / windowwidth;
-
-  // Changes the slider value to a percent width
+  // Changes the slider value to a percent width, preventing too much useless calculation
   function changePizzaSizes(size) {
     var newwidth;
       switch(size) {
@@ -447,11 +443,11 @@ var resizePizzas = function(size) {
   // get the new Pizza width value
   var newwidth = changePizzaSizes(size);
   // store the query selection
-  var allRandomPizzaContainer = document.querySelectorAll(".randomPizzaContainer");
-  // apply the new width to every pizzas in one batch for high performance
+  // using document.getElementsByClassName for better performances
+  var allRandomPizzaContainer = document.getElementsByClassName("randomPizzaContainer");
+  // apply the new width to every pizzas in one batch for better performance
   // And we optimize with requestAnimationFrame()
   function paintPizzaSizes() {
-    requestAnimationFrame(paintPizzaSizes);
     for (var i = 0; i < allRandomPizzaContainer.length; i++) {
         allRandomPizzaContainer[i].style.width = newwidth + "%";
     }
@@ -496,8 +492,8 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
-// will prevent update position to be called to often
-// send a requestTick and check the scroll position for later
+// will prevent updatePpositions function to be called to often
+// send a requestTick to check if an animation can be executed; and store the scroll position for later
 var latestKnownScrollY = 0;
 function scrollLog() {
   latestKnownScrollY = window.scrollY;
@@ -505,8 +501,8 @@ function scrollLog() {
 }
 
 // If a rquestAnimationFrame is still being calculated the request will fail
-// this with prevent to spend too much resources realculating positions
-// Else a request is made and ticking is true again
+// This will prevent to spend too much resources realculating pizzaPositions
+// Else a request is made and ticking is true, preventing new requests.
 var ticking = false;
 function requestTick() {
   if(!ticking) {
@@ -516,6 +512,7 @@ function requestTick() {
 }
 
 // store the mover class object (the moving pizzas)
+// using document.getElementsByClassName for better performances
 var itemsPizzaMove = document.getElementsByClassName('mover');
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
@@ -531,7 +528,7 @@ function updatePositions() {
     phase.push(Math.sin((scrollTop / 1250) + (i % 5)));
   }
 
-  // then we batch the changes & improve performances
+  // then we batch the changes in one loop using requestAnimationFrame for maximum fluidity
   function applyNewPosition() {
     for(var i = 0; i < itemsPizzaMove.length; i++) {
       itemsPizzaMove[i].style.left = itemsPizzaMove[i].basicLeft + 200 * phase[i] + 'px';
@@ -552,23 +549,32 @@ function updatePositions() {
   ticking = false;
 }
 
-// runs updatePositions on scroll
+// runs scrollLog on scroll (not directly updatePositions)
 window.addEventListener('scroll', scrollLog);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 6;
   var s = 256;
-  // 200 pizzas looked overkill, so down to 30
+  var elems = [];
+  // 200 pizzas was overkill, 30 should be enough
+  // creating the data before adding them to the dom
   for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
-    // removed height and width, and set the natural size of the image to the correct value to prevent resizing
+    // removed height and width, and set the natural size of the image to the correct value to prevent resizing/rasterizing
     elem.src = "images/pizzamover.png";
     elem.basicLeft = (i % cols) * s;
     elem.style.left = 0;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    elems.push(elem);
   }
+  // Apply DOM modification in one batch
+  // use getElementById for better performance and store it (better than calling for it for every loop)
+  var movingPizzaId = document.getElementById("movingPizzas1");
+  for (var i = 0; i < 30; i++) {
+    movingPizzaId.appendChild(elems[i]);
+  }
+
   requestAnimationFrame(updatePositions);
 });
