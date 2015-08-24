@@ -572,8 +572,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Apply DOM modification in one batch
   // use getElementById for better performance and store it (better than calling for it for every loop)
   var movingPizzaId = document.getElementById("movingPizzas1");
-  for (var i = 0; i < 30; i++) {
-    movingPizzaId.appendChild(elems[i]);
+  for (var j = 0; j < 30; j++) {
+    movingPizzaId.appendChild(elems[j]);
   }
 
   requestAnimationFrame(updatePositions);
