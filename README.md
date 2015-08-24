@@ -93,6 +93,7 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 #### Optimization Made with Grunt
 
 * the optimized version of the website is available in the _prod directory
+	* minimized html
 	* minimized css
 	* minimized js
 	* minimized img
