@@ -4,13 +4,13 @@ module.exports = {
             expand: true,
             cwd: '',
             src: ['img/*.{png,jpg,gif}'],
-            dest: '_dist/'
+            dest: '_prod/'
         },
         {
             expand: true,
             cwd: '',
             src: ['views/images/*.{png,jpg,gif}'],
-            dest: '_dist/'
+            dest: '_prod/'
         }
         ]
     }

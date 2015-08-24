@@ -12,4 +12,5 @@ prod:
     - 'concurrent:prodFirst'
     - 'concurrent:prodSecond'
     - 'concurrent:prodThird'
+    - 'concurrent:prodFour'
     - img

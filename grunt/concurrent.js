@@ -16,6 +16,9 @@ module.exports = {
     prodThird: [
         'cssmin'
     ],
+    prodFour: [
+        'htmlmin',
+    ],
 
     // Image tasks
     imgFirst: [

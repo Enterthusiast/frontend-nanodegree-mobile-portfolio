@@ -89,3 +89,17 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 	* Set the pizza to 30 instead of 200
 	* Create the new element first
 	* Then add them to the DOM in one loop
+
+#### Optimization Made with Grunt
+
+* the optimized version of the website is available in the _prod directory
+	* minimized css
+	* minimized js
+	* minimized img
+
+* used optional Grunt tools
+	* grunt-concurrent: for multitasking
+	* load-grunt-config: for a cleaner gruntfile
+	* grunt-contrib-jshint: to check for JS errors
+    * grunt-contrib-clean: to delete files
+    * grunt-contrib-watch: to get stats

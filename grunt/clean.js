@@ -1,5 +1,5 @@
 module.exports = {
     all: [
-        "_dist/"
+        "_prod/"
     ]
 };
